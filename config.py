@@ -30,7 +30,10 @@ class Config(object):
     AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app, else put tenant name
     # AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
 
-    CLIENT_ID = "5628a6bd-095e-47e5-a371-320791da9f14"
+    # CLIENT_ID = "5628a6bd-095e-47e5-a371-320791da9f14"
+    CLIENT_ID = os.getenv("CLIENT_ID")
+    if not CLIENT_ID:
+        raise ValueError("Need to define CLIENT_ID environment variable")
 
     REDIRECT_PATH = "/.auth/login/aad/callback"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
 
