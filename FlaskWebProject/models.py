@@ -42,11 +42,12 @@ class Post(db.Model):
     image_path = db.Column(db.String(100))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
+    
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
     def save_changes(self, form, file, userId, new=False):
+        app.logger.info('Post::save_changes({})'.format(form.title.data))
         self.title = form.title.data
         self.subtitle = form.subtitle.data
         self.author = form.author.data
@@ -54,15 +55,18 @@ class Post(db.Model):
         self.user_id = userId
 
         if file:
-            filename = secure_filename(file.filename);
-            fileextension = filename.rsplit('.',1)[1];
-            Randomfilename = id_generator();
-            filename = Randomfilename + '.' + fileextension;
+            filename = secure_filename(file.filename)
+            app.logger.info('Post::save_changes => filename {}'.format(filename))
+            fileextension = filename.rsplit('.',1)[1]
+            Randomfilename = id_generator()
+            filename = Randomfilename + '.' + fileextension
+            app.logger.info('Post::save_changes => filename {}'.format(filename))
             try:
                 blob_service.create_blob_from_stream(blob_container, filename, file)
                 if(self.image_path):
                     blob_service.delete_blob(blob_container, self.image_path)
             except Exception:
+                app.logger.error(Exception)
                 flash(Exception)
             self.image_path =  filename
         if new:

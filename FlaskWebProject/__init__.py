@@ -28,5 +28,6 @@ Session(app)
 db = SQLAlchemy(app)
 login = LoginManager(app)
 login.login_view = 'login'
+app.logger.info('CMS Application configured')
 
 import FlaskWebProject.views
