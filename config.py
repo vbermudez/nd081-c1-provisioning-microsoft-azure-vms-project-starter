@@ -5,7 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-key'
 
-    BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT') or 'cmsimagesstore'
+    BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT') or 'cmsimagestore'
     BLOB_STORAGE_KEY = os.environ.get('BLOB_STORAGE_KEY') or '5w48uE05iLRoW3maHuKdfPl8UW1fDT5O/XlZ47CiwSE+kSQJzKPTIKb55gp9/8Zli3n8mVNgOqv17CWb+jpaqA=='
     BLOB_CONTAINER = os.environ.get('BLOB_CONTAINER') or 'images'
 
