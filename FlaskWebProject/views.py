@@ -63,12 +63,12 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
-    app.logger.info('User login attempt: {}'.format(form.username.data))
     if form.validate_on_submit():
+        app.logger.info('User login attempt: {}'.format(form.username.data))
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            app.logger.info('User login error: {}'.format(form.username.data))
+            app.logger.warn('User login error: {}'.format(form.username.data))
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')

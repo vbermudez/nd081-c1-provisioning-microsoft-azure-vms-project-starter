@@ -35,7 +35,10 @@ class Config(object):
     if not CLIENT_ID:
         raise ValueError("Need to define CLIENT_ID environment variable")
 
-    REDIRECT_PATH = "/.auth/login/aad/callback"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
+    # REDIRECT_PATH = "/.auth/login/aad/callback"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
+    REDIRECT_PATH = os.getenv("REDIRECT_PATH")
+    if not REDIRECT_PATH:
+        raise ValueError("Need to define REDIRECT_PATH environment variable")
 
     # You can find the proper permission names from this document
     # https://docs.microsoft.com/en-us/graph/permissions-reference
